@@ -1,10 +1,21 @@
-class User {
+const sequelize = require('../database')
+const {DataTypes, Model} = require('sequelize')
 
-    constructor(id, name, email) {
-        this.id = id
-        this.name = name
-        this.email = email
+class User extends Model {}
+
+User.init({
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email:{
+        type: DataTypes.STRING,
+        allowNull: false
     }
-}
+},{
+    sequelize,
+    modelName: 'User',
+    tableName: 'users'
+})
 
 module.exports = User

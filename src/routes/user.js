@@ -7,13 +7,13 @@ const UserRepository = require('../repository/user')
 let uRepo = new UserRepository()
 
 // Buscar todos os Users
-router.get('/', (req, res) => {
-
+router.get('/', async(req, res) => {
+    const users = await uRepo.findAll()
     resp = {
         status: 'OK',
-        data: uRepo.findAll()
+        data: users
     }
-
+    res.setHeader('Content-Type', 'application/json')
     res.status(200).send(JSON.stringify(resp))
 })
 // Buscar um User pelo id
@@ -36,14 +36,14 @@ router.get('/:id', (req, res) => {
         status: 'OK',
         data: uRepo.find(uid)
     }
-
+    res.setHeader('Content-Type', 'application/json')
     res.status(200).send(JSON.stringify(resp))
 })
 // Cadastrar um novo User
-router.post('/',(req, res) => {
+router.post('/', async (req, res) => {
     let u = req.body
 
-    if(u.id == undefined || u.name == undefined || u.email == undefined){
+    if(u.name == undefined || u.email == undefined){
         resp = {
             status: 'Error',
             description:`User JSON with id, name and email fields must be provided.`
@@ -52,10 +52,10 @@ router.post('/',(req, res) => {
         return
     }
 
-    uRepo.insert(new User(u.id, u.name, u.email))
+    const user = await uRepo.insert(u)
     resp = {
         status: 'OK',
-        data: `User id ${u.id} created successfully`
+        data: `User id ${user.id} created successfully`
     }
     res.status(200).send(JSON.stringify(resp))
 })

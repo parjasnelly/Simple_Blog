@@ -1,10 +1,15 @@
+const User = require('../model/user')
+
 class UserRepository{
     constructor() {
         this.users = []
     }
 
-    insert(user){
-        this.users.push(user)
+    insert(obj){
+        return User.create({
+            name: obj.name,
+            email: obj.email
+        })
     }
 
     update(user){
@@ -34,7 +39,7 @@ class UserRepository{
     }
 
     findAll(){
-        return this.users
+        return User.findAll()
     }
 }
 
