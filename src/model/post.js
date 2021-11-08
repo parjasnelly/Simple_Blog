@@ -1,21 +1,21 @@
 const sequelize = require('../database')
 const {DataTypes, Model} = require('sequelize')
-class Role extends Model {}
 
-Role.init({
-    name: {
+class Post extends Model{}
+
+Post.init({
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
-    description:{
+    text:{
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: false
     }
 },{
     sequelize,
-    modelName: 'Role',
-    tableName: 'roles'
+    modelName: 'Post',
+    tableName: 'posts'
 })
 
-module.exports = Role
+module.exports = Post
