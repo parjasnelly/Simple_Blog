@@ -1,12 +1,12 @@
 const express = require('express')
-const router = express.Router()
+const route = express.Router()
 
 const UserRepository = require('../database/repository/user')
 
 let uRepo = new UserRepository()
 
 // Buscar todos os Users
-router.get('/', async(req, res) => {
+route.get('/', async(req, res) => {
     const users = await uRepo.findAll()
     let resp = {
         status: 'OK',
@@ -16,7 +16,7 @@ router.get('/', async(req, res) => {
 })
 
 // Buscar um User pelo id
-router.get('/:id', async (req, res) => {
+route.get('/:id', async (req, res) => {
     let uid = req.params.id
 
     let user = await uRepo.find(uid)
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Cadastrar um novo User
-router.post('/', async (req, res) => {
+route.post('/', async (req, res) => {
     let u = req.body
 
     if(u.name === undefined || u.email === undefined){
@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
 })
 
 // Atualizar um User já criado
-router.put('/:id', async (req, res) => {
+route.put('/:id', async (req, res) => {
     let uid = req.params.id
     let u = req.body
 
@@ -94,7 +94,7 @@ router.put('/:id', async (req, res) => {
 })
 
 // Excluir um usuário
-router.delete('/:id', async(req, res) => {
+route.delete('/:id', async(req, res) => {
     let uid = req.params.id
     let user = await uRepo.find(uid)
 
@@ -115,4 +115,4 @@ router.delete('/:id', async(req, res) => {
     }
 })
 
-module.exports = router
+module.exports = route
